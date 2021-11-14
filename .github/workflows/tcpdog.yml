@@ -1,18 +1,20 @@
 name: "build"
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main
+#      - main
+      - actions-failed
     paths-ignore:
       - "docs/**"
       - "**.md"
-  pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - "docs/**"
-      - "**.md"
+#  pull_request:
+#    branches:
+#      - main
+#    paths-ignore:
+#      - "docs/**"
+#      - "**.md"
 
 jobs:
   tcpdog:
@@ -41,6 +43,15 @@ jobs:
         run: |
           cd server
           go build
+
+      - name: Env printing
+        run: |
+          echo "go version: $(go version)"
+          echo "sudo go version: $(sudo go version)"
+          echo "\n------------ go env ------------\n"
+          go env
+          echo "\n------------ sudo go env ------------\n"
+          sudo go env
 
       - name: Test
         run: sudo go test ./... -timeout 5m -coverprofile=profile.cov
