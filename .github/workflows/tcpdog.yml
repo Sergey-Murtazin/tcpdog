@@ -54,7 +54,7 @@ jobs:
           sudo go env
 
       - name: Test
-        run: sudo go test ./... -timeout 5m -coverprofile=profile.cov
+        run: go test ./... -timeout 5m -coverprofile=profile.cov
 
       - name: Coveralls
         uses: shogo82148/actions-goveralls@v1
